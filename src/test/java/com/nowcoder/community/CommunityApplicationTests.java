@@ -3,6 +3,7 @@ package com.nowcoder.community;
 import com.nowcoder.community.dao.DiscussPostMapper;
 import com.nowcoder.community.dao.UserMapper;
 import com.nowcoder.community.entity.DiscussPost;
+import com.nowcoder.community.entity.PageBean;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.service.DiscussPostService;
 import org.junit.jupiter.api.Test;
@@ -99,7 +100,8 @@ class CommunityApplicationTests{
     private DiscussPostService discussPostService;
     @Test
     public void test11(){
-        discussPostService.page(1,5,null);
+        PageBean page = discussPostService.page(2, 5, 111);
+        System.out.println(page);
     }
 
 
