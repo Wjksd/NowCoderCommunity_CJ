@@ -2,8 +2,8 @@ package com.nowcoder.community.controller;
 
 import com.nowcoder.community.entity.PageBean;
 import com.nowcoder.community.entity.Result;
-import com.nowcoder.community.service.DiscussPostService;
-import com.nowcoder.community.service.UserService;
+import com.nowcoder.community.service.imp.DisscussPostServiceImp;
+import com.nowcoder.community.service.imp.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.*;
 public class HomeController {
 
     @Autowired
-    private DiscussPostService discussPostService;
+    private DisscussPostServiceImp discussPostService;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImp userService;
 
 
     //分页查询评论

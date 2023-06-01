@@ -6,7 +6,6 @@ import com.github.pagehelper.PageHelper;
 import com.nowcoder.community.dao.DiscussPostMapper;
 import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.PageBean;
-import com.nowcoder.community.service.DiscussPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +21,11 @@ import java.util.List;
  * @Version 1.0
  */
 @Service
-public class DisscussPostServiceImp implements DiscussPostService {
+public class DisscussPostServiceImp {
 
     @Autowired
     private  DiscussPostMapper dpm;
-    @Override
+
     public PageBean page(Integer page, Integer pagesize, Integer userId) {
         //设置分页参数
         //PageHelper.startPage(page,pagesize);
@@ -41,12 +40,12 @@ public class DisscussPostServiceImp implements DiscussPostService {
         return pageBean;
     }
 
-    @Override
+
     public List<DiscussPost> findDiscussPosts(Integer userId, Integer offset, Integer limit) {
         return dpm.selectDiscussPost(userId,offset,limit);
     }
 
-    @Override
+
     public Integer findDiscussPostRows(Integer userId) {
         return dpm.selectDiscussPostRows(userId);
     }
