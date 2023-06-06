@@ -1,14 +1,14 @@
 package com.nowcoder.community;
 
+import com.nowcoder.community.dao.CommentMapper;
 import com.nowcoder.community.dao.DiscussPostMapper;
 import com.nowcoder.community.dao.LoginTicketMapper;
 import com.nowcoder.community.dao.UserMapper;
-import com.nowcoder.community.entity.DiscussPost;
-import com.nowcoder.community.entity.LoginTicket;
-import com.nowcoder.community.entity.PageBean;
-import com.nowcoder.community.entity.User;
+import com.nowcoder.community.entity.*;
+import com.nowcoder.community.service.imp.CommentServiceImp;
 import com.nowcoder.community.service.imp.DisscussPostServiceImp;
 import com.nowcoder.community.util.MailClient;
+import com.nowcoder.community.util.SensitiveFilter;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,5 +155,64 @@ class CommunityApplicationTests {
 
     }
 
+    @Autowired
+    private SensitiveFilter sensitiveFilter;
+
+    @Test
+    public void test16(){
+        String input = "abc123";
+        String input2 = "这里可以吸毒、高考";
+        String filter1 = sensitiveFilter.filter(input);
+        String filter2 = sensitiveFilter.filter(input2);
+        System.out.println(filter1);
+        System.out.println(filter2);
+    }
+
+
+    @Autowired
+    private CommentMapper commentMapper;
+
+    @Test
+    public void test17(){
+        Comment comment = commentMapper.selectCommentById(36);
+        System.out.println(comment);
+    }
+
+    @Test
+    public void test18(){
+        Comment comment1 = new Comment(null,158,2,
+                280,157,"280号帖子 158回复157",0,new Date());
+
+        commentMapper.insertComment(comment1);
+    }
+
+    @Test
+    public void test19(){
+        List<Comment> comments = commentMapper.selectCommentByEntity(1, 280);
+        for(Comment c:comments){
+            System.out.println(c);
+        }
+    }
+
+    @Test
+    public void test20(){
+        System.out.println(commentMapper.selectCountByEntity(1, 280));
+    }
+
+    @Autowired
+    private CommentServiceImp commentServiceImp;
+
+    @Test
+    public void test21(){
+        PageBean commentBean = commentServiceImp.findCommentByEntity
+                (1, 5, 1, 280);
+
+        System.out.println(commentBean);
+    }
+
+    @Test
+    public void test22(){
+        System.out.println(commentServiceImp.findCommentCount(1, 280));
+    }
 
 }

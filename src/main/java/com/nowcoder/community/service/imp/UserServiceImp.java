@@ -6,6 +6,7 @@ import com.nowcoder.community.entity.LoginTicket;
 import com.nowcoder.community.entity.Result;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.util.CommunityUtil;
+import com.nowcoder.community.util.HostHolder;
 import com.nowcoder.community.util.MailClient;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class UserServiceImp {
 
     @Autowired
     private MailClient mailClient;
+
+    @Autowired
+    HostHolder hostHolder;
 
     @Autowired
     private LoginTicketMapper loginTicketMapper;
@@ -125,5 +129,20 @@ public class UserServiceImp {
 
     public LoginTicket getLoginTicket(String ticket) {
         return loginTicketMapper.selectByTicket(ticket);
+    }
+
+    public void updateHeader(Integer id, String headerUrl) {
+        userMapper.updateHeaderUrl(id,headerUrl);
+    }
+
+    public Result setPassword(String password) {
+
+        String newSalt = CommunityUtil.generateUUID().substring(0, 5);
+        String newPassword = CommunityUtil.md5(password + newSalt);
+        User nowUser = hostHolder.getUser();
+        userMapper.updateSalt(nowUser.getId(),newSalt);
+        userMapper.updatePassword(nowUser.getId(),newPassword);
+        //hostHolder.clear();
+        return Result.success("修改成功，请重新登录");
     }
 }

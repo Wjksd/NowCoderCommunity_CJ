@@ -2,6 +2,7 @@ package com.nowcoder.community.config;
 
 import com.nowcoder.community.interceptor.AlphaInterceptor;
 import com.nowcoder.community.interceptor.LoginInterceptor;
+import com.nowcoder.community.interceptor.LoginRequriedIntercepter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -25,6 +26,9 @@ public class webMvcConfig implements WebMvcConfigurer {
     @Autowired
     private LoginInterceptor loginInterceptor;
 
+    @Autowired
+    private LoginRequriedIntercepter loginRequriedIntercepter;
+
 
 
     public void addInterceptors(InterceptorRegistry registry){
@@ -33,6 +37,8 @@ public class webMvcConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**").excludePathPatterns("/alpha/**","/logout");
+
+        registry.addInterceptor(loginRequriedIntercepter);
 
     }
 

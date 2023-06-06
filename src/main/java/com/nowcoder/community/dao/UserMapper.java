@@ -32,4 +32,6 @@ public interface UserMapper {
     int updatePassword(int id,String password);
 
 
+    void updateSalt(Integer id, String newSalt);
+
 }

@@ -1,6 +1,7 @@
 package com.nowcoder.community.controller;
 
 import com.google.code.kaptcha.Producer;
+import com.nowcoder.community.annotation.LoginRequriment;
 import com.nowcoder.community.entity.Result;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.service.imp.LoginServiceImp;
@@ -95,7 +96,7 @@ public class LoginController {
         }
 
         //检查账号密码
-        Integer expireSeconds = rememberMe?3600 * 12:3600 * 24 * 30;
+        Integer expireSeconds = rememberMe ? 3600 * 12 * 30:3600 * 24;
 
         Result result = loginServiceImp.login(username, password, expireSeconds);
 
@@ -115,6 +116,7 @@ public class LoginController {
     }
 
     //用户登出
+    @LoginRequriment
     @GetMapping("/logout")
     public Result logout(@CookieValue("ticket") String ticket){
         return loginServiceImp.logout(ticket);

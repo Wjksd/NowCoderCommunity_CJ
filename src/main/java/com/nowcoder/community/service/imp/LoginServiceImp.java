@@ -6,6 +6,7 @@ import com.nowcoder.community.entity.LoginTicket;
 import com.nowcoder.community.entity.Result;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.util.CommunityUtil;
+import com.nowcoder.community.util.HostHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,9 @@ public class LoginServiceImp {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private HostHolder hostHolder;
 
 
     public Result login(String username, String password, Integer expireSeconds) {
@@ -77,6 +81,7 @@ public class LoginServiceImp {
     public Result logout(String ticket) {
         loginTicketMapper.updateStatus(ticket,1);
         Integer newStatus = loginTicketMapper.selectByTicket(ticket).getStatus();
+       // hostHolder.clear();
         return Result.success("登出成功,现在状态为" + newStatus);
     }
 }
